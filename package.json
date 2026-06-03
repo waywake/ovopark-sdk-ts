@@ -4,6 +4,14 @@
   "description": "TypeScript SDK for the Ovopark open platform gateway.",
   "license": "MIT",
   "packageManager": "bun@1.3.14",
+  "homepage": "https://github.com/waywake/ovopark-sdk-ts#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/waywake/ovopark-sdk-ts"
+  },
+  "bugs": {
+    "url": "https://github.com/waywake/ovopark-sdk-ts/issues"
+  },
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
