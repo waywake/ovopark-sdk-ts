@@ -27,6 +27,29 @@ describe("createSign", () => {
 
     expect(sign).toBe("B657F7CA341BB5C9C162603B9389DAA9");
   });
+
+  test("sorts mixed-case parameter names with JavaScript code unit order", () => {
+    const sign = createSign(
+      {
+        _aid: "S107",
+        _akey: "S107-0000xxxx",
+        _requestMode: "post",
+        _sm: "md5",
+        _timestamp: "20191128141620",
+        _version: "v1",
+        _mt: "open.shopweb.passengerFlow.getDataOfManyShopsHavingDevice",
+        id: "S_153809",
+        startTime: "2026-03-11 00:00:00",
+        endTime: "2026-03-11 23:59:59",
+        timeType: 1,
+        starthour: 9,
+        endhour: 24,
+      },
+      "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+    );
+
+    expect(sign).toBe("7AC564C28C0EDC4AE01D6F0229893365");
+  });
 });
 
 describe("OpenPlatform", () => {
@@ -68,6 +91,46 @@ describe("OpenPlatform", () => {
       ),
     );
     expect(params._sig).toBe("B657F7CA341BB5C9C162603B9389DAA9");
+  });
+
+  test("returns signed params in deterministic code unit order", () => {
+    const params = createSignedParams(
+      {
+        _aid: "S107",
+        _akey: "S107-0000xxxx",
+        _requestMode: "post",
+        _sm: "md5",
+        _timestamp: "20191128141620",
+        _version: "v1",
+        _mt: "open.shopweb.passengerFlow.getDataOfManyShopsHavingDevice",
+      },
+      {
+        id: "S_153809",
+        startTime: "2026-03-11 00:00:00",
+        endTime: "2026-03-11 23:59:59",
+        timeType: 1,
+        starthour: 9,
+        endhour: 24,
+      },
+      "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+    );
+
+    expect(Object.keys(params)).toEqual([
+      "_aid",
+      "_akey",
+      "_mt",
+      "_requestMode",
+      "_sm",
+      "_timestamp",
+      "_version",
+      "endTime",
+      "endhour",
+      "id",
+      "startTime",
+      "starthour",
+      "timeType",
+      "_sig",
+    ]);
   });
 
   test("posts signed form params and parses json responses", async () => {

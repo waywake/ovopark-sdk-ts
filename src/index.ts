@@ -181,7 +181,7 @@ export function toUrlSearchParams(params: SignableParams): URLSearchParams {
 }
 
 function sortParams(params: SignableParams): Record<string, SignableValue> {
-  return Object.fromEntries(Object.entries(params).sort(([left], [right]) => left.localeCompare(right)));
+  return Object.fromEntries(Object.entries(params).sort());
 }
 
 function buildSignPayload(params: SignableParams, asecret: string): string {
